@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="EnterpriseGuardrailPlatform.API/EnterpriseGuardrailPlatform.API.csproj" />
+  <Project Path="EnterpriseGuardrailPlatform.Functions/EnterpriseGuardrailPlatform.Functions.csproj" />
+</Solution>
