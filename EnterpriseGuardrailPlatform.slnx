@@ -1,4 +1,9 @@
 <Solution>
-  <Project Path="EnterpriseGuardrailPlatform.API/EnterpriseGuardrailPlatform.API.csproj" />
-  <Project Path="EnterpriseGuardrailPlatform.Functions/EnterpriseGuardrailPlatform.Functions.csproj" />
+  <Folder Name="/src/" />
+  <Folder Name="/src/api/">
+    <Project Path="src/api/EnterpriseGuardrailPlatform.Api/EnterpriseGuardrailPlatform.Api.csproj" />
+  </Folder>
+  <Folder Name="/src/functions/">
+    <Project Path="src/functions/EnterpriseGuardrailPlatform.Functions/EnterpriseGuardrailPlatform.Functions.csproj" />
+  </Folder>
 </Solution>
