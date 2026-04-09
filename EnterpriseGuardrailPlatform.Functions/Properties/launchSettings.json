@@ -1,0 +1,9 @@
+{
+  "profiles": {
+    "EnterpriseGuardrailPlatform_Functions": {
+      "commandName": "Project",
+      "commandLineArgs": "--port 7119",
+      "launchBrowser": false
+    }
+  }
+}
