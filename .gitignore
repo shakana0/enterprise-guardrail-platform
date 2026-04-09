@@ -483,3 +483,6 @@ $RECYCLE.BIN/
 
 # Local HTTP test files
 *.http
+
+# VS Code settings
+.vscode/
