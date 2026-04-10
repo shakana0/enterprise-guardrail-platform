@@ -1,41 +1,40 @@
+using Azure.Messaging.ServiceBus;
+using Scalar.AspNetCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
+
+// Add Service Bus client
+builder.Services.AddSingleton(sp =>
+{
+    var connectionString = builder.Configuration["ServiceBusConnection"];
+    return new ServiceBusClient(connectionString);
+});
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.MapOpenApi();
-}
+app.MapOpenApi();
 
-app.UseHttpsRedirection();
-
-var summaries = new[]
+app.MapScalarApiReference(options =>
 {
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-};
+    options.Title = "Enterprise Guardrail Platform API";
+});
 
-app.MapGet("/weatherforecast", () =>
+// Health check
+app.MapGet("/health", () => Results.Ok(new { status = "healthy" }));
+
+// Test endpoint
+app.MapGet("/work", () => Results.Ok(new { message = "API workload running" }));
+
+// Send message to queue
+app.MapPost("/queue/send", async (ServiceBusClient client, MessageDto dto) =>
 {
-    var forecast =  Enumerable.Range(1, 5).Select(index =>
-        new WeatherForecast
-        (
-            DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-            Random.Shared.Next(-20, 55),
-            summaries[Random.Shared.Next(summaries.Length)]
-        ))
-        .ToArray();
-    return forecast;
-})
-.WithName("GetWeatherForecast");
+    var sender = client.CreateSender("demo-queue");
+    await sender.SendMessageAsync(new ServiceBusMessage(dto.Message));
+    return Results.Ok(new { sent = dto.Message });
+});
 
 app.Run();
 
-record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
-{
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-}
+record MessageDto(string Message);
