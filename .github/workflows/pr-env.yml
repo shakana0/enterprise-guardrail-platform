@@ -1,0 +1,16 @@
+name: PR Environment
+
+on:
+  pull_request:
+    types: [opened, reopened]
+
+jobs:
+  pr-env:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Create PR namespace (placeholder)
+        run: echo "PR namespace creation will be added later"
