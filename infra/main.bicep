@@ -28,3 +28,41 @@ module peering './network/peering.bicep' = {
     spokeVnetName: 'egp-spoke-vnet'
   }
 }
+
+module identities './security/identities.bicep' = {
+  name: 'compute-identities'
+  params: {
+    location: location
+  }
+}
+
+module acr './registry/acr.bicep' = {
+  name: 'compute-acr'
+  params: {
+    location: location
+  }
+}
+
+module keyvault './compute/keyvault.bicep' = {
+  name: 'compute-kv'
+  params: {
+    location: location
+  }
+}
+
+module servicebus './compute/servicebus.bicep' = {
+  name: 'compute-sb'
+  params: {
+    location: location
+  }
+}
+
+module aks './compute/aks.bicep' = {
+  name: 'compute-aks'
+  params: {
+    location: location
+    aksIdentityId: identities.outputs.aksIdentityId
+    workloadIdentityId: identities.outputs.workloadIdentityId
+    vnetName: 'egp-spoke-vnet'
+  }
+}
