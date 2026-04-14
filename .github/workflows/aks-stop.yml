@@ -1,19 +1,20 @@
-name: Stop AKS
-
+name: Stop AKS Automatic
 on:
-  workflow_dispatch:
+  workflow_dispatch: # Allows manual operation
+  schedule:
+    - cron: "0 20 * * *" # Runs every night at 20:00 UTC
 
 jobs:
   stop-aks:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Azure Login (OIDC placeholder)
+      - name: Azure Login
         uses: azure/login@v2
         with:
           client-id: ${{ secrets.AZURE_CLIENT_ID }}
           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
-      - name: Stop AKS (placeholder)
-        run: echo "az aks stop will be added after AKS is deployed"
+      - name: Stop AKS Cluster
+        run: |
+          az aks stop --name egp-aks --resource-group egp-platform-rg
