@@ -20,16 +20,17 @@ jobs:
           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
-      - name: What-If (Säkerhetskoll)
+      - name: What-If
         run: |
-          az deployment group what-if \
-            --resource-group egp-platform-rg \
+          az deployment sub what-if \
+            --location northeurope \
             --template-file infra/main.bicep \
             --parameters alertEmail=${{ secrets.ALERT_EMAIL }}
 
       - name: Deploy
         run: |
-          az deployment group create \
-            --resource-group egp-platform-rg \
-            --template-file infra/main.bicep \
-            --parameters alertEmail=${{ secrets.ALERT_EMAIL }}
+          az deployment sub create \
+                  --name "deploy-${{ github.run_id }}" \
+                  --location northeurope \
+                  --template-file infra/main.bicep \
+                  --parameters alertEmail=${{ secrets.ALERT_EMAIL }}
