@@ -10,12 +10,7 @@ resource skuPolicy 'Microsoft.Authorization/policyAssignments@2022-06-01' = {
   location: 'northeurope'
   properties: {
     displayName: 'Restrict VM sizes for cost control'
-
-    policyDefinitionId: tenantResourceId(
-      'Microsoft.Authorization/policyDefinitions',
-      'cccc23c7-8427-4f53-ad87-de6164b3f073'
-    )
-
+    policyDefinitionId: '/providers/Microsoft.Authorization/policyDefinitions/cccc23c7-8427-4f53-ad87-de6164b3f073'
     parameters: {
       listOfAllowedSKUs: {
         value: allowedSkuList
