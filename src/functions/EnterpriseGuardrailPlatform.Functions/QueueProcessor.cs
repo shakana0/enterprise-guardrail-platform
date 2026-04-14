@@ -1,3 +1,4 @@
+using Azure.Messaging.ServiceBus;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Extensions.Logging;
 
@@ -14,9 +15,10 @@ public class QueueProcessor
 
     [Function("QueueProcessor")]
     public void Run(
-        [ServiceBusTrigger("demo-queue", Connection = "ServiceBusConnection")]
-        string message)
+    [ServiceBusTrigger("demo-queue", Connection = "ServiceBusConnection")]
+    ServiceBusReceivedMessage message)
     {
-        _logger.LogInformation($"Received message: {message}");
+        _logger.LogInformation($"Message ID: {message.MessageId}");
+        _logger.LogInformation($"Body: {message.Body}");
     }
 }
