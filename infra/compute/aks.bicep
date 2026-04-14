@@ -8,6 +8,10 @@ param aksSubnetName string = 'aks-subnet'
 resource aks 'Microsoft.ContainerService/managedClusters@2023-07-01' = {
   name: aksName
   location: location
+  sku: {
+    name: 'Base'
+    tier: 'Free'
+  }
   identity: {
     type: 'UserAssigned'
     userAssignedIdentities: {
@@ -37,12 +41,15 @@ resource aks 'Microsoft.ContainerService/managedClusters@2023-07-01' = {
     agentPoolProfiles: [
       {
         name: 'systempool'
-        vmSize: 'Standard_B4ms'
+        vmSize: 'Standard_B2s'
         count: 1
         mode: 'System'
         osType: 'Linux'
         type: 'VirtualMachineScaleSets'
         vnetSubnetID: resourceId('Microsoft.Network/virtualNetworks/subnets', vnetName, aksSubnetName)
+        scaleSetPriority: 'Spot'
+        scaleSetEvictionPolicy: 'Delete'
+        spotMaxPrice: -1
       }
     ]
   }
