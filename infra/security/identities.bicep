@@ -14,3 +14,4 @@ resource workloadIdentity 'Microsoft.ManagedIdentity/userAssignedIdentities@2023
 
 output aksIdentityId string = aksIdentity.id
 output workloadIdentityId string = workloadIdentity.id
+output aksIdentityPrincipalId string = aksIdentity.properties.principalId
