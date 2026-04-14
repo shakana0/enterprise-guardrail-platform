@@ -1,6 +1,6 @@
 param location string
 param keyVaultName string = 'egp-kv'
-param aksSubnetId string // Skickas in från main.bicep
+param aksSubnetId string
 
 resource kv 'Microsoft.KeyVault/vaults@2023-02-01' = {
   name: keyVaultName
@@ -13,13 +13,13 @@ resource kv 'Microsoft.KeyVault/vaults@2023-02-01' = {
     }
     enableRbacAuthorization: true
 
-    // HÄR LÅSER VI DÖRREN:
+    // HERE WE LOCK THE DOOR:
     networkAcls: {
-      defaultAction: 'Deny' // Blockera allt som inte uttryckligen tillåts
-      bypass: 'AzureServices' // Tillåt Azure-tjänster (som backup) att nå valvet
+      defaultAction: 'Deny' // Block anything that is not explicitly allowed
+      bypass: 'AzureServices' // Allow Azure services (like backup) to access the vault
       virtualNetworkRules: [
         {
-          id: aksSubnetId // Tillåt endast trafik från ditt AKS-subnät
+          id: aksSubnetId // Only allow traffic from your AKS subnet
         }
       ]
     }
