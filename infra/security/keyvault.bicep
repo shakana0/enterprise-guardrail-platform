@@ -1,5 +1,5 @@
 param location string
-param keyVaultName string = 'egp-kv'
+param keyVaultName string = 'egp-kv-jh-2026'
 param aksSubnetId string
 
 resource kv 'Microsoft.KeyVault/vaults@2023-02-01' = {

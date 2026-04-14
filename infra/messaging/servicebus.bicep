@@ -40,7 +40,7 @@
 // output serviceBusId string = sbNamespace.id
 
 param location string
-param sbNamespaceName string = 'egp-sb'
+param sbNamespaceName string = 'egp-sb-jh-2026'
 
 resource sbNamespace 'Microsoft.ServiceBus/namespaces@2022-10-01-preview' = {
   name: sbNamespaceName

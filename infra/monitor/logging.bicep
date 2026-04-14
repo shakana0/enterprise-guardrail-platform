@@ -1,6 +1,6 @@
 param location string
-param appInsightsName string = 'egp-ai'
-param workspaceName string = 'egp-log'
+param appInsightsName string = 'egp-ai-jh-2026'
+param workspaceName string = 'egp-log-jh-2026'
 
 // 1. Log Analytics Workspace - The engine that stores all the raw data
 resource workspace 'Microsoft.OperationalInsights/workspaces@2022-10-01' = {
