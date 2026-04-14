@@ -8,7 +8,7 @@ resource budget 'Microsoft.Consumption/budgets@2023-05-01' = {
     category: 'Cost'
     amount: budgetAmount
     timePeriod: {
-      startDate: '2024-01-01'
+      startDate: '2026-04-01'
       endDate: '2026-12-31'
     }
     notifications: {
