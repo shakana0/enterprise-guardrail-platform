@@ -1,22 +1,35 @@
 name: Deploy
-
 on:
   workflow_dispatch:
+
+permissions:
+  id-token: write
+  contents: read
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Azure Login (OIDC placeholder)
+      - name: Azure Login
         uses: azure/login@v2
         with:
           client-id: ${{ secrets.AZURE_CLIENT_ID }}
           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
-      - name: Deploy Bicep (placeholder)
-        run: echo "Deployment will be added after compute resources exist"
+      - name: What-If (Säkerhetskoll)
+        run: |
+          az deployment group what-if \
+            --resource-group egp-platform-rg \
+            --template-file infra/main.bicep \
+            --parameters alertEmail=${{ secrets.ALERT_EMAIL }}
+
+      - name: Deploy
+        run: |
+          az deployment group create \
+            --resource-group egp-platform-rg \
+            --template-file infra/main.bicep \
+            --parameters alertEmail=${{ secrets.ALERT_EMAIL }}
