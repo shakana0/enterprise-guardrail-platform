@@ -14,3 +14,4 @@ resource spokeVnet 'Microsoft.Network/virtualNetworks@2023-04-01' = {
 }
 
 output spokeVnetId string = spokeVnet.id
+output spokeVnetName string = spokeVnet.name
