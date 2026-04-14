@@ -14,3 +14,4 @@ resource hubVnet 'Microsoft.Network/virtualNetworks@2023-04-01' = {
 }
 
 output hubVnetId string = hubVnet.id
+output hubVnetName string = hubVnet.name
