@@ -72,6 +72,9 @@ module peering './network/peering.bicep' = {
     spokeVnetName: spoke.outputs.spokeVnetName
     spokeVnetId: spoke.outputs.spokeVnetId
   }
+  dependsOn: [
+    subnets
+  ]
 }
 
 // 4. Security & Monitoring
@@ -138,6 +141,9 @@ module storage './storage/storage-account.bicep' = {
     storageAccountName: naming.storageAccountName
     keyVaultName: naming.keyVaultName
   }
+  dependsOn: [
+    keyvault
+  ]
 }
 
 module appServicePlan './compute/app-service-plan.bicep' = {
@@ -159,6 +165,9 @@ module functionApp './compute/functionapp.bicep' = {
     funcSubnetId: subnets.outputs.funcSubnetId
     appServicePlanId: appServicePlan.outputs.appServicePlanId
   }
+  dependsOn: [
+    storage
+  ]
 }
 
 // 7. Roles
