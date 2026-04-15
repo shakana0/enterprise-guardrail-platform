@@ -1,6 +1,4 @@
-// param location string
-// param sbNamespaceName string = 'egp-sb'
-// param aksSubnetId string // Skickas in från main.bicep
+// param aksSubnetId string
 
 // resource sbNamespace 'Microsoft.ServiceBus/namespaces@2022-10-01-preview' = {
 //   name: sbNamespaceName
@@ -40,7 +38,7 @@
 // output serviceBusId string = sbNamespace.id
 
 param location string
-param sbNamespaceName string = 'egp-sb-jh-2026'
+param sbNamespaceName string
 
 resource sbNamespace 'Microsoft.ServiceBus/namespaces@2022-10-01-preview' = {
   name: sbNamespaceName
