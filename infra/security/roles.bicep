@@ -13,19 +13,22 @@ resource kv 'Microsoft.KeyVault/vaults@2023-07-01' existing = {
 }
 
 // Definition for the AcrPull role (Built-in Azure)
-var acrPullId = subscriptionResourceId(
-  'Microsoft.Authorization/roleDefinitions',
-  '7f951dda-4ed3-4680-a7ca-43571c7d5f8b'
-)
+// var acrPullId = subscriptionResourceId(
+//   'Microsoft.Authorization/roleDefinitions',
+//   '7f951dda-4ed3-4680-a7ca-43571c7d5f8b'
+// )
+var acrPullId = '/providers/Microsoft.Authorization/roleDefinitions/7f951dda-4ed3-4680-a7ca-43571c7d5f8b'
 
 //Key Vault Secrets User
-var kvSecretsUserId = subscriptionResourceId(
-  'Microsoft.Authorization/roleDefinitions',
-  '4633458b-17de-408a-b874-0445c86b69e6'
-)
+// var kvSecretsUserId = subscriptionResourceId(
+//   'Microsoft.Authorization/roleDefinitions',
+//   '4633458b-17de-408a-b874-0445c86b69e6'
+// )
+var kvSecretsUserId = '/providers/Microsoft.Authorization/roleDefinitions/4633458b-17de-408a-b874-0445c86b69e6'
 
 resource aksAcrPull 'Microsoft.Authorization/roleAssignments@2022-04-01' = if (!empty(acrName)) {
-  name: guid(subscription().id, acrName, aksPrincipalId, 'AcrPull')
+  // name: guid(subscription().id, acrName, aksPrincipalId, 'AcrPull')
+  name: guid(acr.id, aksPrincipalId, 'AcrPull')
   scope: acr
   properties: {
     principalId: aksPrincipalId
