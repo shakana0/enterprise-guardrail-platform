@@ -1,5 +1,5 @@
 param location string
-param acrName string = 'egpstud26acr'
+param acrName string
 
 resource acr 'Microsoft.ContainerRegistry/registries@2023-01-01-preview' = {
   name: acrName
