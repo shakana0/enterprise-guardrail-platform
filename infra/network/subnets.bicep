@@ -23,5 +23,24 @@ resource privateEndpointSubnet 'Microsoft.Network/virtualNetworks/subnets@2023-0
   }
 }
 
+resource funcSubnet 'Microsoft.Network/virtualNetworks/subnets@2023-05-01' = {
+  name: '${vnetName}/snet-function'
+  properties: {
+    addressPrefix: '10.1.3.0/24'
+    serviceEndpoints: [
+      { service: 'Microsoft.KeyVault' }
+    ]
+    delegations: [
+      {
+        name: 'webappDelegation'
+        properties: {
+          serviceName: 'Microsoft.Web/serverFarms'
+        }
+      }
+    ]
+  }
+}
+
+output funcSubnetId string = funcSubnet.id
 output aksSubnetId string = aksSubnet.id
 output aksSubnetName string = aksSubnet.name
