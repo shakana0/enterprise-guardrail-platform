@@ -1,6 +1,6 @@
 param location string
-param aksIdentityName string = 'egp-aks-identity'
-param workloadIdentityName string = 'egp-workload-identity'
+param aksIdentityName string
+param workloadIdentityName string
 
 resource aksIdentity 'Microsoft.ManagedIdentity/userAssignedIdentities@2023-01-31' = {
   name: aksIdentityName
