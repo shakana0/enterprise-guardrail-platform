@@ -21,7 +21,8 @@ resource functionApp 'Microsoft.Web/sites@2023-12-01' = {
     reserved: true
     siteConfig: {
       linuxFxVersion: 'DOTNET-ISOLATED|10.0'
-      vnetRouteAllEnabled: true
+      // vnetRouteAllEnabled: true
+      vnetRouteAllEnabled: false
       appSettings: [
         {
           name: 'AzureWebJobsStorage'
