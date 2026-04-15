@@ -110,14 +110,14 @@ module keyvault './security/keyvault.bicep' = {
 }
 
 // 5. Container Registry & AKS
-// module acr './registry/acr.bicep' = {
-//   name: 'compute-acr'
-//   scope: rg
-//   params: {
-//     location: location
-//     acrName: naming.acrName
-//   }
-// }
+module acr './registry/acr.bicep' = {
+  name: 'compute-acr'
+  scope: rg
+  params: {
+    location: location
+    acrName: naming.acrName
+  }
+}
 
 // module aks './compute/aks.bicep' = {
 //   name: 'compute-aks'
@@ -175,12 +175,14 @@ module roleAssignments './security/roles.bicep' = {
   name: 'role-assignments'
   scope: rg
   params: {
-    // acrName: acr.outputs.acrName
-    acrName: ''
+    acrName: naming.acrName
     aksPrincipalId: identities.outputs.aksIdentityPrincipalId
     functionAppPrincipalId: functionApp.outputs.principalId
     keyVaultName: keyvault.outputs.keyVaultName
   }
+  dependsOn: [
+    acr
+  ]
 }
 
 // 8. Messaging & Cost control
