@@ -1,6 +1,6 @@
 targetScope = 'subscription'
 
-param location string = 'swedencentral'
+param location string = 'northeurope'
 param rgName string = 'egp-platform-rg'
 
 var naming = {
