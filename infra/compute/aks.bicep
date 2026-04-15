@@ -1,9 +1,9 @@
 param location string
-param aksName string = 'egp-aks'
+param aksName string
 param aksIdentityId string
 param workloadIdentityId string
 param vnetName string
-param aksSubnetName string = 'aks-subnet'
+param aksSubnetName string
 
 resource aks 'Microsoft.ContainerService/managedClusters@2023-07-01' = {
   name: aksName
