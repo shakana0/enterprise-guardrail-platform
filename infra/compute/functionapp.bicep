@@ -1,7 +1,7 @@
 param location string
 param functionAppName string
 param keyVaultName string
-param funcSubnetId string
+// param funcSubnetId string
 param appServicePlanId string
 
 resource kv 'Microsoft.KeyVault/vaults@2023-07-01' existing = {
@@ -17,9 +17,11 @@ resource functionApp 'Microsoft.Web/sites@2023-12-01' = {
   }
   properties: {
     serverFarmId: appServicePlanId
-    virtualNetworkSubnetId: funcSubnetId
+    // virtualNetworkSubnetId: funcSubnetId
+    reserved: true
     siteConfig: {
       linuxFxVersion: 'DOTNET-ISOLATED|10.0'
+      vnetRouteAllEnabled: true
       appSettings: [
         {
           name: 'AzureWebJobsStorage'
