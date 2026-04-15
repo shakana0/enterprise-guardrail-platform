@@ -1,7 +1,26 @@
 targetScope = 'subscription'
 
-param location string = 'northeurope'
+param location string = 'swedencentral'
 param rgName string = 'egp-platform-rg'
+
+var naming = {
+  keyVaultName: 'egp-kv-jh-2026'
+  funcAppName: 'egp-func-jh-2026'
+  aksSubnetName: 'aks-subnet'
+  aksName: 'egp-aks'
+  funcSubnetName: 'snet-function'
+  sbNamespaceName: 'egp-sb-jh-2026'
+  appInsightsName: 'egp-ai-jh-2026'
+  workspaceName: 'egp-log-jh-2026'
+  hubVnetName: 'egp-hub-vnet'
+  spokeVnetName: 'egp-spoke-vnet'
+  acrName: 'egpstud26acr'
+  aksIdentityName: 'egp-aks-identity'
+  workloadIdentityName: 'egp-workload-identity'
+  functionAppName: 'egp-func-jh-2026'
+  appServicePlanName: 'egp-asp-jh-2026'
+  storageAccountName: 'egpstoragejh2026'
+}
 
 @secure()
 param alertEmail string
@@ -23,6 +42,7 @@ module hub './network/vnet-hub.bicep' = {
   scope: rg
   params: {
     location: location
+    hubVnetName: naming.hubVnetName
   }
 }
 
@@ -31,6 +51,7 @@ module spoke './network/vnet-spoke.bicep' = {
   scope: rg
   params: {
     location: location
+    spokeVnetName: naming.spokeVnetName
   }
 }
 
@@ -59,23 +80,18 @@ module identities './security/identities.bicep' = {
   scope: rg
   params: {
     location: location
+    aksIdentityName: naming.aksIdentityName
+    workloadIdentityName: naming.workloadIdentityName
   }
 }
-
-// module roleAssignments './security/roles.bicep' = {
-//   name: 'role-assignments'
-//   scope: rg
-//   params: {
-//      acrName: acr.outputs.acrName
-//     aksPrincipalId: identities.outputs.aksIdentityPrincipalId
-//   }
-// }
 
 module logging './monitor/logging.bicep' = {
   name: 'monitor-logging'
   scope: rg
   params: {
     location: location
+    appInsightsName: naming.appInsightsName
+    workspaceName: naming.workspaceName
   }
 }
 
@@ -85,6 +101,8 @@ module keyvault './security/keyvault.bicep' = {
   params: {
     location: location
     aksSubnetId: subnets.outputs.aksSubnetId
+    funcSubnetId: subnets.outputs.funcSubnetId
+    keyVaultName: naming.keyVaultName
   }
 }
 
@@ -94,7 +112,7 @@ module keyvault './security/keyvault.bicep' = {
 //   scope: rg
 //   params: {
 //     location: location
-//      acrName: 'egpstud26acr'
+//     acrName: naming.acrName
 //   }
 // }
 
@@ -107,15 +125,62 @@ module keyvault './security/keyvault.bicep' = {
 //     workloadIdentityId: identities.outputs.workloadIdentityId
 //     vnetName: spoke.outputs.spokeVnetName
 //     aksSubnetName: subnets.outputs.aksSubnetName
+//     aksName: naming.aksName
 //   }
 // }
 
-// 6. Messaging & Cost control
+// 6. Compute & Storage: Core resources for the Function App
+module storage './storage/storage-account.bicep' = {
+  name: 'storage-deploy'
+  scope: rg
+  params: {
+    location: location
+    storageAccountName: naming.storageAccountName
+    keyVaultName: naming.keyVaultName
+  }
+}
+
+module appServicePlan './compute/app-service-plan.bicep' = {
+  name: 'plan-deploy'
+  scope: rg
+  params: {
+    location: location
+    appServicePlanName: naming.appServicePlanName
+  }
+}
+
+module functionApp './compute/functionapp.bicep' = {
+  name: 'functionAppDeploy'
+  scope: rg
+  params: {
+    location: location
+    functionAppName: naming.funcAppName
+    keyVaultName: keyvault.outputs.keyVaultName
+    funcSubnetId: subnets.outputs.funcSubnetId
+    appServicePlanId: appServicePlan.outputs.appServicePlanId
+  }
+}
+
+// 7. Roles
+module roleAssignments './security/roles.bicep' = {
+  name: 'role-assignments'
+  scope: rg
+  params: {
+    // acrName: acr.outputs.acrName
+    acrName: ''
+    aksPrincipalId: identities.outputs.aksIdentityPrincipalId
+    functionAppPrincipalId: functionApp.outputs.principalId
+    keyVaultName: keyvault.outputs.keyVaultName
+  }
+}
+
+// 8. Messaging & Cost control
 module servicebus './messaging/servicebus.bicep' = {
   name: 'compute-sb'
   scope: rg
   params: {
     location: location
+    sbNamespaceName: naming.sbNamespaceName
   }
 }
 
