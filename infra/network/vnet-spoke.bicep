@@ -1,5 +1,5 @@
 param location string
-param spokeVnetName string = 'egp-spoke-vnet'
+param spokeVnetName string
 
 resource spokeVnet 'Microsoft.Network/virtualNetworks@2023-04-01' = {
   name: spokeVnetName
