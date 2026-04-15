@@ -162,7 +162,7 @@ module functionApp './compute/functionapp.bicep' = {
     location: location
     functionAppName: naming.funcAppName
     keyVaultName: keyvault.outputs.keyVaultName
-    funcSubnetId: subnets.outputs.funcSubnetId
+    // funcSubnetId: subnets.outputs.funcSubnetId
     appServicePlanId: appServicePlan.outputs.appServicePlanId
   }
   dependsOn: [
