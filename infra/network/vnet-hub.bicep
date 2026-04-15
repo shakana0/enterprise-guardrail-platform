@@ -1,5 +1,5 @@
 param location string
-param hubVnetName string = 'egp-hub-vnet'
+param hubVnetName string
 
 resource hubVnet 'Microsoft.Network/virtualNetworks@2023-04-01' = {
   name: hubVnetName
