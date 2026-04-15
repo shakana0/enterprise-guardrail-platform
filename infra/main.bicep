@@ -37,15 +37,6 @@ module governancePolicy './governance/policy.bicep' = {
 }
 
 // 3. Network: Hub & Spoke
-module hub './network/vnet-hub.bicep' = {
-  name: 'hub-vnet'
-  scope: rg
-  params: {
-    location: location
-    hubVnetName: naming.hubVnetName
-  }
-}
-
 module spoke './network/vnet-spoke.bicep' = {
   name: 'spoke-vnet'
   scope: rg
@@ -60,6 +51,15 @@ module subnets './network/subnets.bicep' = {
   scope: rg
   params: {
     vnetName: spoke.outputs.spokeVnetName
+  }
+}
+
+module hub './network/vnet-hub.bicep' = {
+  name: 'hub-vnet'
+  scope: rg
+  params: {
+    location: location
+    hubVnetName: naming.hubVnetName
   }
 }
 
