@@ -50,7 +50,7 @@ module subnets './network/subnets.bicep' = {
   name: 'spoke-subnets-${deploymentTime}'
   scope: rg
   params: {
-    vnetName: spoke.outputs.spokeVnetName
+    vnetName: naming.spokeVnetName
   }
 }
 
