@@ -3,7 +3,6 @@ param aksPrincipalId string
 param functionAppPrincipalId string
 param keyVaultName string
 
-// Get reference to the existing resources
 resource acr 'Microsoft.ContainerRegistry/registries@2023-01-01-preview' existing = if (!empty(acrName)) {
   name: acrName
 }
@@ -12,38 +11,22 @@ resource kv 'Microsoft.KeyVault/vaults@2023-07-01' existing = {
   name: keyVaultName
 }
 
-// Definition for the AcrPull role (Built-in Azure)
-// var acrPullId = subscriptionResourceId(
-//   'Microsoft.Authorization/roleDefinitions',
-//   '7f951dda-4ed3-4680-a7ca-43571c7d5f8b'
-// )
-var acrPullId = '/providers/Microsoft.Authorization/roleDefinitions/7f951dda-4ed3-4680-a7ca-43571c7d5f8b'
-
-//Key Vault Secrets User
-// var kvSecretsUserId = subscriptionResourceId(
-//   'Microsoft.Authorization/roleDefinitions',
-//   '4633458b-17de-408a-b874-0445c86b69e6'
-// )
-var kvSecretsUserId = '/providers/Microsoft.Authorization/roleDefinitions/4633458b-17de-408a-b874-0445c86b69e6'
-
 resource aksAcrPull 'Microsoft.Authorization/roleAssignments@2022-04-01' = if (!empty(acrName)) {
-  // name: guid(subscription().id, acrName, aksPrincipalId, 'AcrPull')
-  name: guid(acr.id, aksPrincipalId, 'AcrPull')
+  name: guid(acr.id, aksPrincipalId, '7f951dda-4ed3-4680-a7ca-43571c7d5f8b')
   scope: acr
   properties: {
     principalId: aksPrincipalId
-    roleDefinitionId: acrPullId
+    roleDefinitionId: '/providers/Microsoft.Authorization/roleDefinitions/7f951dda-4ed3-4680-a7ca-43571c7d5f8b'
     principalType: 'ServicePrincipal'
   }
 }
 
-//Function App -> Key Vault Secrets User
 resource funcKvSecretsUser 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
-  name: guid(kv.id, functionAppPrincipalId, 'KeyVaultSecretsUser')
+  name: guid(kv.id, functionAppPrincipalId, '4633458b-17de-408a-b874-0445c86b69e6')
   scope: kv
   properties: {
-    roleDefinitionId: kvSecretsUserId
     principalId: functionAppPrincipalId
+    roleDefinitionId: '/providers/Microsoft.Authorization/roleDefinitions/4633458b-17de-408a-b874-0445c86b69e6'
     principalType: 'ServicePrincipal'
   }
 }
