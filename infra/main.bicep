@@ -103,8 +103,8 @@ module keyvault './security/keyvault.bicep' = {
   scope: rg
   params: {
     location: location
-    aksSubnetId: subnets.outputs.aksSubnetId
-    funcSubnetId: subnets.outputs.funcSubnetId
+    aksSubnetId: spoke.outputs.aksSubnetId
+    funcSubnetId: spoke.outputs.funcSubnetId
     keyVaultName: naming.keyVaultName
   }
 }
@@ -127,7 +127,7 @@ module acr './registry/acr.bicep' = {
 //     aksIdentityId: identities.outputs.aksIdentityId
 //     workloadIdentityId: identities.outputs.workloadIdentityId
 //     vnetName: spoke.outputs.spokeVnetName
-//     aksSubnetName: subnets.outputs.aksSubnetName
+//     aksSubnetName: spoke.outputs.aksSubnetName
 //     aksName: naming.aksName
 //   }
 // }
