@@ -63,19 +63,19 @@ module hub './network/vnet-hub.bicep' = {
   }
 }
 
-module peering './network/peering.bicep' = {
-  name: 'network-peering'
-  scope: rg
-  params: {
-    hubVnetName: hub.outputs.hubVnetName
-    hubVnetId: hub.outputs.hubVnetId
-    spokeVnetName: spoke.outputs.spokeVnetName
-    spokeVnetId: spoke.outputs.spokeVnetId
-  }
-  dependsOn: [
-    subnets
-  ]
-}
+// module peering './network/peering.bicep' = {
+//   name: 'network-peering'
+//   scope: rg
+//   params: {
+//     hubVnetName: hub.outputs.hubVnetName
+//     hubVnetId: hub.outputs.hubVnetId
+//     spokeVnetName: spoke.outputs.spokeVnetName
+//     spokeVnetId: spoke.outputs.spokeVnetId
+//   }
+//   dependsOn: [
+//     subnets
+//   ]
+// }
 
 // 4. Security & Monitoring
 module identities './security/identities.bicep' = {
