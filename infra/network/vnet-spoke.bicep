@@ -7,7 +7,7 @@ resource spokeVnet 'Microsoft.Network/virtualNetworks@2023-04-01' = {
   properties: {
     addressSpace: {
       addressPrefixes: [
-        '10.1.0.0/16'
+        '10.2.0.0/16'
       ]
     }
   }

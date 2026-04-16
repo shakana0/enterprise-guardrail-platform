@@ -13,7 +13,7 @@ var naming = {
   appInsightsName: 'egp-ai-jh-2026'
   workspaceName: 'egp-log-jh-2026'
   hubVnetName: 'egp-hub-vnet'
-  spokeVnetName: 'egp-spoke-vnet'
+  spokeVnetName: 'egp-spoke-vnet-2'
   acrName: 'egpstud26acr'
   aksIdentityName: 'egp-aks-identity'
   workloadIdentityName: 'egp-workload-identity'
