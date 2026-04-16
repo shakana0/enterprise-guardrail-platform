@@ -12,33 +12,33 @@ resource kv 'Microsoft.KeyVault/vaults@2023-07-01' existing = {
   name: keyVaultName
 }
 
-var acrPullRole = subscriptionResourceId(
+var acrPullId = subscriptionResourceId(
   'Microsoft.Authorization/roleDefinitions',
   '7f951dda-4ed3-4680-a7ca-43571c7d5f8b'
 )
-var kvSecretsUserRole = subscriptionResourceId(
+var kvSecretsUserId = subscriptionResourceId(
   'Microsoft.Authorization/roleDefinitions',
   '4633458b-17de-408a-b874-0445c86b69e6'
 )
 
 #disable-next-line no-unnecessary-determinism
 resource aksAcrPull 'Microsoft.Authorization/roleAssignments@2022-04-01' = if (!empty(acrName)) {
-  name: guid(acr.id, aksPrincipalId, acrPullRole, deploymentTime)
+  name: guid(acr.id, aksPrincipalId, acrPullId, deploymentTime)
   scope: acr
   properties: {
     principalId: aksPrincipalId
-    roleDefinitionId: acrPullRole
+    roleDefinitionId: acrPullId
     principalType: 'ServicePrincipal'
   }
 }
 
 #disable-next-line no-unnecessary-determinism
 resource funcKvSecretsUser 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
-  name: guid(kv.id, functionAppPrincipalId, kvSecretsUserRole, deploymentTime)
+  name: guid(kv.id, functionAppPrincipalId, kvSecretsUserId, deploymentTime)
   scope: kv
   properties: {
     principalId: functionAppPrincipalId
-    roleDefinitionId: kvSecretsUserRole
+    roleDefinitionId: kvSecretsUserId
     principalType: 'ServicePrincipal'
   }
 }
