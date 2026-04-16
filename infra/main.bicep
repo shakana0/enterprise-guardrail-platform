@@ -2,7 +2,7 @@ targetScope = 'subscription'
 
 param location string = 'swedencentral'
 param rgName string = 'egp-platform-rg'
-
+param deploymentTime string = utcNow('yyyyMMddHHmm')
 var naming = {
   keyVaultName: 'egp-kv-jh-2026'
   funcAppName: 'egp-func-jh-2026'
@@ -38,7 +38,7 @@ module governancePolicy './governance/policy.bicep' = {
 
 // 3. Network: Hub & Spoke
 module spoke './network/vnet-spoke.bicep' = {
-  name: 'spoke-vnet'
+  name: 'spoke-vnet-${deploymentTime}'
   scope: rg
   params: {
     location: location
@@ -47,7 +47,7 @@ module spoke './network/vnet-spoke.bicep' = {
 }
 
 module subnets './network/subnets.bicep' = {
-  name: 'spoke-subnets'
+  name: 'spoke-subnets-${deploymentTime}'
   scope: rg
   params: {
     vnetName: spoke.outputs.spokeVnetName
@@ -172,7 +172,7 @@ module functionApp './compute/functionapp.bicep' = {
 
 // 7. Roles
 module roleAssignments './security/roles.bicep' = {
-  name: 'role-assignments'
+  name: 'role-assignments-${deploymentTime}'
   scope: rg
   params: {
     acrName: naming.acrName
