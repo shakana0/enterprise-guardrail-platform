@@ -179,6 +179,7 @@ module roleAssignments './security/roles.bicep' = {
     aksPrincipalId: identities.outputs.aksIdentityPrincipalId
     functionAppPrincipalId: functionApp.outputs.principalId
     keyVaultName: keyvault.outputs.keyVaultName
+    deploymentTime: deploymentTime
   }
   dependsOn: [
     acr

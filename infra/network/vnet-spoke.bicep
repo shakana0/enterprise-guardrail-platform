@@ -45,4 +45,3 @@ output spokeVnetId string = spokeVnet.id
 output spokeVnetName string = spokeVnet.name
 output aksSubnetId string = resourceId('Microsoft.Network/virtualNetworks/subnets', spokeVnetName, 'aks-subnet')
 output funcSubnetId string = resourceId('Microsoft.Network/virtualNetworks/subnets', spokeVnetName, 'snet-function')
-output aksSubnetName string = 'aks-subnet'
