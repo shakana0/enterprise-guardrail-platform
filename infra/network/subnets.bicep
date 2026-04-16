@@ -30,14 +30,14 @@ resource funcSubnet 'Microsoft.Network/virtualNetworks/subnets@2023-05-01' = {
     serviceEndpoints: [
       { service: 'Microsoft.KeyVault' }
     ]
-    delegations: [
-      {
-        name: 'webappDelegation'
-        properties: {
-          serviceName: 'Microsoft.Web/serverFarms'
-        }
-      }
-    ]
+    // delegations: [
+    //   {
+    //     name: 'webappDelegation'
+    //     properties: {
+    //       serviceName: 'Microsoft.Web/serverFarms'
+    //     }
+    //   }
+    // ]
   }
 }
 
