@@ -3,7 +3,7 @@ param vnetName string
 resource aksSubnet 'Microsoft.Network/virtualNetworks/subnets@2023-04-01' = {
   name: '${vnetName}/aks-subnet'
   properties: {
-    addressPrefix: '10.2.1.0/24'
+    addressPrefix: '10.3.1.0/24'
     serviceEndpoints: [
       {
         service: 'Microsoft.KeyVault'
@@ -18,7 +18,7 @@ resource aksSubnet 'Microsoft.Network/virtualNetworks/subnets@2023-04-01' = {
 resource privateEndpointSubnet 'Microsoft.Network/virtualNetworks/subnets@2023-04-01' = {
   name: '${vnetName}/private-endpoints'
   properties: {
-    addressPrefix: '10.2.2.0/24'
+    addressPrefix: '10.3.2.0/24'
     privateEndpointNetworkPolicies: 'Disabled'
   }
 }
@@ -26,7 +26,7 @@ resource privateEndpointSubnet 'Microsoft.Network/virtualNetworks/subnets@2023-0
 resource funcSubnet 'Microsoft.Network/virtualNetworks/subnets@2023-05-01' = {
   name: '${vnetName}/snet-function'
   properties: {
-    addressPrefix: '10.2.3.0/24'
+    addressPrefix: '10.3.3.0/24'
     serviceEndpoints: [
       { service: 'Microsoft.KeyVault' }
     ]
