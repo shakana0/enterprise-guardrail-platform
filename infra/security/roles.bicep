@@ -11,16 +11,9 @@ resource kv 'Microsoft.KeyVault/vaults@2023-07-01' existing = {
   name: keyVaultName
 }
 
-var acrPullId = subscriptionResourceId(
-  'Microsoft.Authorization/roleDefinitions',
-  '7f951dda-4ed3-4680-a7ca-43571c7d5f8b'
-)
-var kvSecretsUserId = subscriptionResourceId(
-  'Microsoft.Authorization/roleDefinitions',
-  '4633458b-17de-408a-b874-0445c86b69e6'
-)
+var acrPullId = '/providers/Microsoft.Authorization/roleDefinitions/7f951dda-4ed3-4680-a7ca-43571c7d5f8b'
+var kvSecretsUserId = '/providers/Microsoft.Authorization/roleDefinitions/4633458b-17de-408a-b874-0445c86b69e6'
 
-#disable-next-line no-unnecessary-determinism
 resource aksAcrPull 'Microsoft.Authorization/roleAssignments@2022-04-01' = if (!empty(acrName)) {
   name: guid(acr.id, aksPrincipalId, acrPullId)
   scope: acr
@@ -31,7 +24,6 @@ resource aksAcrPull 'Microsoft.Authorization/roleAssignments@2022-04-01' = if (!
   }
 }
 
-#disable-next-line no-unnecessary-determinism
 resource funcKvSecretsUser 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
   name: guid(kv.id, functionAppPrincipalId, kvSecretsUserId)
   scope: kv
