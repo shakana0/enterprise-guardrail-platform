@@ -17,7 +17,6 @@ var naming = {
   acrName: 'egpstud26acr'
   aksIdentityName: 'egp-aks-identity'
   workloadIdentityName: 'egp-workload-identity'
-  functionAppName: 'egp-func-jh-2026'
   appServicePlanName: 'egp-asp-jh-2026'
   storageAccountName: 'egpstoragejh2026'
 }
@@ -30,9 +29,6 @@ resource rg 'Microsoft.Resources/resourceGroups@2023-07-01' = {
   name: rgName
   location: location
 }
-
-var acrPullFullId = '${subscription().id}/providers/Microsoft.Authorization/roleDefinitions/7f951dda-4ed3-4680-a7ca-43571c7d5f8b'
-var kvSecretsFullId = '${subscription().id}/providers/Microsoft.Authorization/roleDefinitions/4633458b-17de-408a-b874-0445c86b69e6'
 
 // 2. Governance: Apply subscription-level policies for cost control
 module governancePolicy './governance/policy.bicep' = {
@@ -182,8 +178,6 @@ module roleAssignments './security/roles.bicep' = {
     aksPrincipalId: identities.outputs.aksIdentityPrincipalId
     functionAppPrincipalId: functionApp.outputs.principalId
     keyVaultName: keyvault.outputs.keyVaultName
-    acrPullRoleId: acrPullFullId
-    kvSecretsUserRoleId: kvSecretsFullId
   }
   dependsOn: [
     acr
