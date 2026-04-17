@@ -21,7 +21,7 @@ var kvSecretsDefinitionId = tenantResourceId(
 )
 
 resource aksAcrPull 'Microsoft.Authorization/roleAssignments@2022-04-01' = if (!empty(acrName)) {
-  name: 'c762068b-1df9-5499-afef-b441eb2ec0af'
+  name: guid(acr.id, aksPrincipalId, acrPullDefinitionId, 'v70')
   scope: acr
   properties: {
     principalId: aksPrincipalId
@@ -31,7 +31,7 @@ resource aksAcrPull 'Microsoft.Authorization/roleAssignments@2022-04-01' = if (!
 }
 
 resource funcKvSecretsUser 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
-  name: guid(kv.id, functionAppPrincipalId, kvSecretsDefinitionId, 'force-fix-1')
+  name: guid(kv.id, functionAppPrincipalId, kvSecretsDefinitionId, 'v70')
   scope: kv
   properties: {
     principalId: functionAppPrincipalId
