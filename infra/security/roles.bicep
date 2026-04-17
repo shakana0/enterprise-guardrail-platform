@@ -2,7 +2,6 @@ param acrName string
 param aksPrincipalId string
 param functionAppPrincipalId string
 param keyVaultName string
-param deploymentTime string
 
 resource acr 'Microsoft.ContainerRegistry/registries@2023-01-01-preview' existing = if (!empty(acrName)) {
   name: acrName
@@ -23,7 +22,7 @@ var kvSecretsUserId = subscriptionResourceId(
 
 #disable-next-line no-unnecessary-determinism
 resource aksAcrPull 'Microsoft.Authorization/roleAssignments@2022-04-01' = if (!empty(acrName)) {
-  name: guid(acr.id, aksPrincipalId, acrPullId, deploymentTime, 'v7')
+  name: guid(acr.id, aksPrincipalId, acrPullId)
   scope: acr
   properties: {
     principalId: aksPrincipalId
@@ -34,7 +33,7 @@ resource aksAcrPull 'Microsoft.Authorization/roleAssignments@2022-04-01' = if (!
 
 #disable-next-line no-unnecessary-determinism
 resource funcKvSecretsUser 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
-  name: guid(kv.id, functionAppPrincipalId, kvSecretsUserId, deploymentTime, 'v7')
+  name: guid(kv.id, functionAppPrincipalId, kvSecretsUserId)
   scope: kv
   properties: {
     principalId: functionAppPrincipalId
