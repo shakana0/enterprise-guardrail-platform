@@ -179,6 +179,14 @@ module roleAssignments './security/roles.bicep' = {
     aksPrincipalId: identities.outputs.aksIdentityPrincipalId
     functionAppPrincipalId: functionApp.outputs.principalId
     keyVaultName: keyvault.outputs.keyVaultName
+    acrPullRoleId: subscriptionResourceId(
+      'Microsoft.Authorization/roleDefinitions',
+      '7f951dda-4ed3-4680-a7ca-43571c7d5f8b'
+    )
+    kvSecretsUserRoleId: subscriptionResourceId(
+      'Microsoft.Authorization/roleDefinitions',
+      '4633458b-17de-408a-b874-0445c86b69e6'
+    )
   }
   dependsOn: [
     acr
