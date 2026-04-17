@@ -24,8 +24,8 @@ resource kvSecretsUserDefinition 'Microsoft.Authorization/roleDefinitions@2022-0
 
 #disable-next-line no-unnecessary-determinism
 resource aksAcrPull 'Microsoft.Authorization/roleAssignments@2022-04-01' = if (!empty(acrName)) {
-  // Vi byter namnstrategi helt för att slippa Exists-felet
-  name: guid(acr.id, aksPrincipalId, acrPullDefinition.id, deploymentTime)
+  // Vi lägger till 'v3' här för att garantera ett nytt GUID
+  name: guid(acr.id, aksPrincipalId, acrPullDefinition.id, deploymentTime, 'v3')
   scope: acr
   properties: {
     principalId: aksPrincipalId
@@ -36,7 +36,7 @@ resource aksAcrPull 'Microsoft.Authorization/roleAssignments@2022-04-01' = if (!
 
 #disable-next-line no-unnecessary-determinism
 resource funcKvSecretsUser 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
-  name: guid(kv.id, functionAppPrincipalId, kvSecretsUserDefinition.id, deploymentTime)
+  name: guid(kv.id, functionAppPrincipalId, kvSecretsUserDefinition.id, deploymentTime, 'v3')
   scope: kv
   properties: {
     principalId: functionAppPrincipalId
