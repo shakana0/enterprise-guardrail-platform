@@ -23,7 +23,7 @@ var kvSecretsUserId = subscriptionResourceId(
 
 #disable-next-line no-unnecessary-determinism
 resource aksAcrPull 'Microsoft.Authorization/roleAssignments@2022-04-01' = if (!empty(acrName)) {
-  name: guid(acr.id, aksPrincipalId, acrPullId, deploymentTime, 'v4')
+  name: guid(acr.id, aksPrincipalId, acrPullId, deploymentTime, 'v5')
   scope: acr
   properties: {
     principalId: aksPrincipalId
@@ -34,7 +34,7 @@ resource aksAcrPull 'Microsoft.Authorization/roleAssignments@2022-04-01' = if (!
 
 #disable-next-line no-unnecessary-determinism
 resource funcKvSecretsUser 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
-  name: guid(kv.id, functionAppPrincipalId, kvSecretsUserId, deploymentTime, 'v4')
+  name: guid(kv.id, functionAppPrincipalId, kvSecretsUserId, deploymentTime, 'v5')
   scope: kv
   properties: {
     principalId: functionAppPrincipalId
