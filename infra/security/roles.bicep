@@ -12,35 +12,33 @@ resource kv 'Microsoft.KeyVault/vaults@2023-07-01' existing = {
   name: keyVaultName
 }
 
-resource acrPullDefinition 'Microsoft.Authorization/roleDefinitions@2022-04-01' existing = {
-  scope: subscription()
-  name: '7f951dda-4ed3-4680-a7ca-43571c7d5f8b'
-}
-
-resource kvSecretsUserDefinition 'Microsoft.Authorization/roleDefinitions@2022-04-01' existing = {
-  scope: subscription()
-  name: '4633458b-17de-408a-b874-0445c86b69e6'
-}
+var acrPullId = subscriptionResourceId(
+  'Microsoft.Authorization/roleDefinitions',
+  '7f951dda-4ed3-4680-a7ca-43571c7d5f8b'
+)
+var kvSecretsUserId = subscriptionResourceId(
+  'Microsoft.Authorization/roleDefinitions',
+  '4633458b-17de-408a-b874-0445c86b69e6'
+)
 
 #disable-next-line no-unnecessary-determinism
 resource aksAcrPull 'Microsoft.Authorization/roleAssignments@2022-04-01' = if (!empty(acrName)) {
-  // Vi lägger till 'v3' här för att garantera ett nytt GUID
-  name: guid(acr.id, aksPrincipalId, acrPullDefinition.id, deploymentTime, 'v3')
+  name: guid(acr.id, aksPrincipalId, acrPullId, deploymentTime, 'v4')
   scope: acr
   properties: {
     principalId: aksPrincipalId
-    roleDefinitionId: acrPullDefinition.id
+    roleDefinitionId: acrPullId
     principalType: 'ServicePrincipal'
   }
 }
 
 #disable-next-line no-unnecessary-determinism
 resource funcKvSecretsUser 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
-  name: guid(kv.id, functionAppPrincipalId, kvSecretsUserDefinition.id, deploymentTime, 'v3')
+  name: guid(kv.id, functionAppPrincipalId, kvSecretsUserId, deploymentTime, 'v4')
   scope: kv
   properties: {
     principalId: functionAppPrincipalId
-    roleDefinitionId: kvSecretsUserDefinition.id
+    roleDefinitionId: kvSecretsUserId
     principalType: 'ServicePrincipal'
   }
 }
