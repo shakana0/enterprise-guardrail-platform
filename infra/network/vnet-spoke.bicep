@@ -36,3 +36,4 @@ resource spokeVnet 'Microsoft.Network/virtualNetworks@2023-04-01' = {
 
 output aksSubnetId string = resourceId('Microsoft.Network/virtualNetworks/subnets', spokeVnetName, 'aks-subnet')
 output funcSubnetId string = resourceId('Microsoft.Network/virtualNetworks/subnets', spokeVnetName, 'snet-function')
+output aksSubnetName string = 'aks-subnet'

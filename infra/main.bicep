@@ -46,13 +46,13 @@ module spoke './network/vnet-spoke.bicep' = {
   }
 }
 
-module subnets './network/subnets.bicep' = {
-  name: 'spoke-subnets-${deploymentTime}'
-  scope: rg
-  params: {
-    vnetName: naming.spokeVnetName
-  }
-}
+// module subnets './network/subnets.bicep' = {
+//   name: 'spoke-subnets-${deploymentTime}'
+//   scope: rg
+//   params: {
+//     vnetName: naming.spokeVnetName
+//   }
+// }
 
 module hub './network/vnet-hub.bicep' = {
   name: 'hub-vnet'
@@ -111,7 +111,7 @@ module keyvault './security/keyvault.bicep' = {
 
 // 5. Container Registry & AKS
 module acr './registry/acr.bicep' = {
-  name: 'compute-acr'
+  name: 'acr-deploy-${deploymentTime}'
   scope: rg
   params: {
     location: location
@@ -126,7 +126,7 @@ module acr './registry/acr.bicep' = {
 //     location: location
 //     aksIdentityId: identities.outputs.aksIdentityId
 //     workloadIdentityId: identities.outputs.workloadIdentityId
-//     vnetName: spoke.outputs.spokeVnetName
+//     vnetName: naming.spokeVnetName
 //     aksSubnetName: spoke.outputs.aksSubnetName
 //     aksName: naming.aksName
 //   }
@@ -162,7 +162,7 @@ module functionApp './compute/functionapp.bicep' = {
     location: location
     functionAppName: naming.funcAppName
     keyVaultName: keyvault.outputs.keyVaultName
-    // funcSubnetId: subnets.outputs.funcSubnetId
+    // funcSubnetId: spoke.outputs.funcSubnetId
     appServicePlanId: appServicePlan.outputs.appServicePlanId
   }
   dependsOn: [
