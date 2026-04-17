@@ -2,7 +2,7 @@ targetScope = 'subscription'
 
 param location string = 'swedencentral'
 param rgName string = 'egp-platform-rg'
-param deploymentTime string = utcNow('yyyyMMddHHmm-final-100')
+param deploymentTime string = utcNow('yyyyMMddHHmm-final-200')
 var naming = {
   keyVaultName: 'egp-kv-jh-2026'
   funcAppName: 'egp-func-jh-2026'
