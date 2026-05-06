@@ -10,7 +10,7 @@ The Enterprise Guardrail Platform (EGP) is built on the principle of **Zero-Trus
 > **Security Walkthrough:** Our Zero-Trust model shifts the focus from "secret-sharing" to "identity-validation". By leveraging OpenID Connect (OIDC) for deployments and Managed Identities for runtime, we eliminate the risk of leaked credentials and ensure that every service access is explicitly authorized via RBAC.
 
 <p align="center">
-  <img src="./assets/security.png" width="800" alt="Security and Identity Access Flow" />
+  <img src="../assets/security.png" width="800" alt="Security and Identity Access Flow" />
 </p>
 
 ---
