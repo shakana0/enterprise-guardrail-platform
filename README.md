@@ -1,14 +1,24 @@
-﻿# The Enterprise Guardrail Platform (EGP)
+﻿<div align="center">
+
+# The Enterprise Guardrail Platform (EGP)
 
 > **A Self-Healing, Cost-Aware Foundation for Modern Cloud Workloads.**
 
 The Enterprise Guardrail Platform is a high-performance, secure, and FinOps-optimized cloud foundation built on Azure. It is designed to solve the friction between developer velocity and enterprise governance by providing a "Secure-by-Design" environment.
 
 [![Azure](https://img.shields.io/badge/Azure-Cloud--Native-0089D6?logo=microsoftazure)](https://azure.microsoft.com)
-[![Bicep](<https://img.shields.io/badge/Infrastructure-Bicep%20(IaC)-B15DA1>)](https://learn.microsoft.com/en-us/azure/azure-resource-manager/bicep/)
+[![Bicep](https://img.shields.io/badge/Infrastructure-Bicep%20(IaC)-B15DA1)](https://learn.microsoft.com/en-us/azure/azure-resource-manager/bicep/)
 [![FinOps](https://img.shields.io/badge/FinOps-Optimized-brightgreen)](https://www.finops.org/)
 
 ---
+
+### 🗺️ Platform Navigation
+
+[📋 Requirements](docs/REQUIREMENTS.md) • [🏗️ Architecture](docs/ARCHITECTURE.md) • [🔐 Security](docs/SECURITY.md) • [🎯 FinOps](docs/FINOPS.md) • [🛠️ Infrastructure](docs/INFRASTRUCTURE.md) • [🚀 CI/CD](docs/WORKFLOW.md)
+
+---
+
+</div>
 
 ## 🎯 Executive Summary
 
@@ -63,8 +73,9 @@ The entire state is defined in **Modular Bicep**, ensuring 100% reproducibility 
 
 ## 🏁 Documentation Deep-Dives
 
+- [📋 **Platform Requirements**](docs/REQUIRMENTS.md) - Functional and non-functional benchmarks for a production-ready state.
 - [🏗️ **Architecture**](docs/ARCHITECTURE.md) - Hub-and-Spoke & VNet Peering.
 - [🔐 **Security & Identity**](docs/SECURITY.md) - RBAC, Managed Identities, and Key Vault.
-- [💰 **FinOps & Governance**](docs/FINOPS.md) - Budgeting, Policies, and Automation.
+- [🎯 **FinOps & Governance**](docs/FINOPS.md) - Budgeting, Policies, and Automation.
 - [🛠️ **Infrastructure**](docs/INFRASTRUCTURE.md) - Bicep modules and resource definitions.
 - [🚀 **CI/CD**](docs/WORKFLOW.md) - GitHub Actions workflows and deployment triggers.
