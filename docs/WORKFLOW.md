@@ -10,7 +10,7 @@ This document details the automated processes that drive the Enterprise Guardrai
 > **Automation Walkthrough:** The platform's lifecycle is entirely event-driven. From code-quality gates triggered on Pull Requests to automated FinOps "hibernation" schedules, our GitHub Actions pipelines ensure that the infrastructure state remains consistent with our Bicep definitions without manual intervention.
 
 <p align="center">
-  <img src="./assets/workflow.png" width="800" alt="CI/CD and Automation Pipelines" />
+  <img src="../assets/workflow.png" width="800" alt="CI/CD and Automation Pipelines" />
 </p>
 
 ---
