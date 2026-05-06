@@ -10,8 +10,9 @@ The EGP platform is 100% defined using **Azure Bicep**, ensuring that the enviro
 > **Infrastructure Walkthrough:** The EGP is built on a modular Bicep foundation, where each component is treated as a reusable building block. This hierarchical deployment approach ensures that critical foundation layers like networking and logging are established before compute workloads are provisioned.
 
 <p align="center">
-  <img src="./assets/infrastructure.png" width="800" alt="Bicep Module Hierarchy" />
+  <img src="../assets/infra.png" width="800" alt="Bicep Module Hierarchy" />
 </p>
+
 ---
 
 ## 🏗️ Modular Design
