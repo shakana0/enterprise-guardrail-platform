@@ -10,7 +10,7 @@ This document provides a technical deep-dive into the architectural patterns and
 > **Architecture Walkthrough:** The EGP follows a Hub-and-Spoke topology to enforce a clear boundary between platform management and application workloads. This design ensures that all traffic is governed by centralized security policies while allowing the Spoke environments to scale independently.
 
 <p align="center">
-  <img src="./assets/architecture.png" width="800" alt="Hub-and-Spoke Architecture Diagram" />
+  <img src="../assets/architecture.png" width="800" alt="Hub-and-Spoke Architecture Diagram" />
 </p>
 
 ---
